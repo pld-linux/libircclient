@@ -1,0 +1,11 @@
+--- libircclient-1.6/configure.in~	2012-01-22 01:46:50.000000000 +0100
++++ libircclient-1.6/configure.in	2012-07-12 21:39:13.632624131 +0200
+@@ -63,7 +63,7 @@
+ if test "$use_debug" = "yes"; then
+ 	CFLAGS="${CFLAGS} -g -DENABLE_DEBUG"
+ else
+-	CFLAGS="${CFLAGS} -O3"
++	CFLAGS="${CFLAGS}"
+ fi
+ 
+ # Choosing the target

@@ -1,0 +1,18 @@
+--- libircclient-1.6/src/Makefile.in.orig	2012-07-12 21:57:24.955918972 +0200
++++ libircclient-1.6/src/Makefile.in	2012-07-12 21:59:55.212580343 +0200
+@@ -13,13 +13,13 @@
+ 
+ OBJS = libircclient.o
+ 
+-all:	@TARGET@
++all:	static shared
+ 
+ static:	libircclient.a
+ shared: $(SOLIB)
+ shared_mingw: libircclient.dll
+ 
+-install: lib
++install: all
+ 	-mkdir -p $(DESTDIR)@includedir@/libircclient
+ 	-mkdir -p $(DESTDIR)@libdir@
+ 	cp ../include/libircclient.h $(DESTDIR)@includedir@/libircclient/libircclient.h
