@@ -37,7 +37,6 @@ diff -ur libircclient-1.6/src/Makefile.in libircclient-1.6.soname/src/Makefile.i
 +	cp ../include/libirc_options.h  $(DESTDIR)@includedir@/libircclient/libirc_options.h 
 +	cp ../include/libirc_rfcnumeric.h  $(DESTDIR)@includedir@/libircclient/libirc_rfcnumeric.h 
 +	cp -a libircclient.so* $(DESTDIR)@libdir@
-+	ldconfig -n $(DESTDIR)@libdir@
 +	cp -a libircclient.a $(DESTDIR)@libdir@
  
 -libircclient.so: libircclient.o
@@ -45,6 +44,7 @@ diff -ur libircclient-1.6/src/Makefile.in libircclient-1.6.soname/src/Makefile.i
 +$(SOLIB): libircclient.o
 +	$(CC) -shared -Wl,-soname,$(SONAME) $(LDFLAGS) -s -o $(SOLIB) libircclient.o @LIBS@
 +	ln -s $(SOLIB) libircclient.so
++	/sbin/ldconfig -n .
  
  libircclient.dll: libircclient.o
  	$(CC) -shared -s -o libircclient.dll -Wl,-out-implib,libircclient.lib libircclient.o libircclient.def -lkernel32 -lwsock32 @LIBS@
