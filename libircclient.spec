@@ -1,7 +1,7 @@
 Summary:	Small but extremely powerful library which implements the IRC protocol
 Name:		libircclient
 Version:	1.6
-Release:	2
+Release:	6
 License:	LGPL
 Group:		Libraries
 Source0:	http://downloads.sourceforge.net/libircclient/%{name}-%{version}.tar.gz
