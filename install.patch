@@ -11,7 +11,7 @@
  shared: $(SOLIB)
  shared_mingw: libircclient.dll
  
--install: lib
+-install:
 +install: all
  	-mkdir -p $(DESTDIR)@includedir@/libircclient
  	-mkdir -p $(DESTDIR)@libdir@

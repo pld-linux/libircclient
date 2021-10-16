@@ -2,8 +2,8 @@ diff -ur libircclient-1.6/src/Makefile.in libircclient-1.6.soname/src/Makefile.i
 --- libircclient-1.6/src/Makefile.in	2012-01-22 23:13:17.000000000 +0100
 +++ libircclient-1.6.soname/src/Makefile.in	2012-07-12 21:53:47.000000000 +0200
 @@ -6,27 +6,34 @@
- INCLUDES=-I../include
  DESTDIR=
+ APIVERSION = 1
  
 +VERSION_MAJOR=$(shell sed -n 's/^\#define\s\+LIBIRC_VERSION_HIGH\s\+\([0-9]\+\)/\1/p' params.h)
 +VERSION_MINOR=$(shell sed -n 's/^\#define\s\+LIBIRC_VERSION_LOW\s\+\([0-9]\+\)/\1/p' params.h)
@@ -19,16 +19,16 @@ diff -ur libircclient-1.6/src/Makefile.in libircclient-1.6.soname/src/Makefile.i
 +shared: $(SOLIB)
  shared_mingw: libircclient.dll
  
- install: lib
+ install:
 -	-mkdir -p $(DESTDIR)@prefix@/include
--	-mkdir -p $(DESTDIR)@prefix@/lib
+-	-mkdir -p $(DESTDIR)@libdir@
 -	cp ../include/libircclient.h $(DESTDIR)@prefix@/include/libircclient.h
 -	cp ../include/libirc_errors.h $(DESTDIR)@prefix@/include/libirc_errors.h
 -	cp ../include/libirc_events.h  $(DESTDIR)@prefix@/include/libirc_events.h 
 -	cp ../include/libirc_options.h  $(DESTDIR)@prefix@/include/libirc_options.h 
 -	cp ../include/libirc_rfcnumeric.h  $(DESTDIR)@prefix@/include/libirc_rfcnumeric.h 
--	cp libircclient.so $(DESTDIR)@prefix@/lib/
--	cp libircclient.a $(DESTDIR)@prefix@/lib/
+-	cp libircclient.so $(DESTDIR)@libdir@/libircclient.so.$(APIVERSION)
+-	ln -fs libircclient.so.$(APIVERSION) $(DESTDIR)@libdir@/libircclient.so
 +	-mkdir -p $(DESTDIR)@includedir@/libircclient
 +	-mkdir -p $(DESTDIR)@libdir@
 +	cp ../include/libircclient.h $(DESTDIR)@includedir@/libircclient/libircclient.h
@@ -40,9 +40,9 @@ diff -ur libircclient-1.6/src/Makefile.in libircclient-1.6.soname/src/Makefile.i
 +	cp -a libircclient.a $(DESTDIR)@libdir@
  
 -libircclient.so: libircclient.o
--	$(CC) -shared -s -o libircclient.so libircclient.o @LIBS@
+-	$(CC) -shared -s -Wl,-soname,libircclient.so.$(APIVERSION) -o libircclient.so libircclient.o @LDFLAGS@ @LIBS@
 +$(SOLIB): libircclient.o
-+	$(CC) -shared -Wl,-soname,$(SONAME) $(LDFLAGS) -s -o $(SOLIB) libircclient.o @LIBS@
++	$(CC) -shared -Wl,-soname,$(SONAME) $(LDFLAGS) -o $(SOLIB) libircclient.o @LIBS@
 +	ln -s $(SOLIB) libircclient.so
 +	/sbin/ldconfig -n .
  
